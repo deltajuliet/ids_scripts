@@ -1,0 +1,11 @@
+/var/log/suricata/*.log /var/log/suricata/*.json
+{
+    rotate 5
+    missingok
+    delaycompress
+    create
+    sharedscripts
+    postrotate
+            /bin/kill -HUP $(cat /var/run/suricata.pid)
+    endscript
+}
