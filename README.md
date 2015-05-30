@@ -14,13 +14,12 @@ daemonlogger
 	If daemonlogger_rename variables are not set then files won't be renamed and will remain with epoch timestamp
 
 suricata
-
 	Supports the following methods:
 	-start
 	-stop
-	-update_rules
 	-restart
-	-purge_rules
+	-pull_rulls
+	-purge_logs
 
 
 
