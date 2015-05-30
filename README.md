@@ -28,5 +28,8 @@ _utils_
 
 These utilities can be used with the above scripts to streamline/enhance management of ids tools
 
-daemonlogger_inotify_renamer.sh
+daemonlogger_inotify_rename.sh
 	Requires inotify-tools to be installed to watch for newly created files
+
+daemonlogger_ls_rename.sh
+	Renames files using ls to iterate through files
