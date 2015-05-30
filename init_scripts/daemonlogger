@@ -34,13 +34,17 @@ case "$1" in
 		$INITAL_DAEMONLOGGER_RENAME_SCRIPT /packet_recorder/.pcap /packet_recorder
 		# Starting script to rename new files that are created and backgrounds it
 		$DAEMONLOGGER_RENAME_DAEMON_SCRIPT /packet_recorder/.pcap /packet_recorder &
+		sleep 2
         echo "Starting $name"
         #Add all daemonloggers here!!!!
-		$DAEMONLOGGER_BIN -d -g daemon -u daemon -i eth0 -l $PCAP_LOCATION -M 50% -n Perimeter -r -s 100000000 -S0 >> "$stdout_log" 2>> "$stderr_log" &
+        #Starts daemonloggert as a daemon - interface - location - % of free space - filename - ring gmmmkkkbbb 
+		$DAEMONLOGGER_BIN -d -i eth0 -l $PCAP_LOCATION -M 50% -n Perimeter -r -s 1000000000 -S0 >> "$stdout_log" 2>> "$stderr_log" &
+		sleep 2
         if ! is_running; then
             echo "Unable to start, see $stdout_log and $stderr_log"
             exit 1
         fi
+        echo "Dameonloggers started!!!"
     fi
     ;;
     stop)
@@ -80,13 +84,18 @@ case "$1" in
     ;;
     status)
     if is_running; then
-        echo "Running"
+        echo "The following daemonlogger pids are running: "
+        pgrep -f $DAEMONLOGGER_BIN
     else
         echo "Stopped"
         exit 1
     fi
     ;;
     purge_pcaps)
+	if is_running; then
+        echo "Daemonlogger still run, please stop first"
+        exit 1
+    fi
 	echo "Purging all pcaps in ${PCAP_LOCATION}"
 	rm $PCAP_LOCATION/*
 	$INITAL_DAEMONLOGGER_RENAME_SCRIPT $PCAP_LOCATION $RENAMED_PCAP_LOCATION
